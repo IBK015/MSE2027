@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spatial Systems &amp; Society · Class of 2027 · UT</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ut-blue: #003366;
+  --ut-teal: #009BBD;
+  --ut-teal-light: #c8eaf4;
+  --ink: #12110f;
+  --ink-2: #444240;
+  --ink-3: #8a8880;
+  --bg: #f7f6f2;
+  --bg-2: #eeecea;
+  --bg-3: #e3e0da;
+  --white: #ffffff;
+  --card-r: 14px;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+/* ══════════════════════
+   HERO — split layout with blended zigzag
+══════════════════════ */
+/* ══════════════════════════════════════
+   HERO  —  left text | zigzag | right photo   (like the screenshot)
+══════════════════════════════════════ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 48% 52%;
+}
+
+/* ── Left: solid navy panel ── */
+.hero-left {
+  background: #02244a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 70px 52px 52px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Right: photo panel ── */
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+.hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+/* strong blue gradient bleeds in from the left of the photo */
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #02244a           0%,
+    rgba(2,36,74,0.88) 10%,
+    rgba(2,36,74,0.55) 24%,
+    rgba(2,36,74,0.18) 42%,
+    transparent        62%
+  );
+  z-index: 1;
+}
+
+/* ── Zigzag divider: sits exactly on the grid boundary ── */
+.hero-zigzag {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* centred on the 48% column boundary */
+  left: calc(48% - 26px);
+  width: 52px;
+  z-index: 6;
+  pointer-events: none;
+}
+.hero-zigzag svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Typography ── */
+.hero-kicker {
+  font-family: 'Syne', sans-serif;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #00c8e8;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 52px;
+  color: #fff;
+  line-height: 1.0;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.hero-title em {
+  font-style: normal;
+  color: #00c8e8;
+  display: block;
+}
+.hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.52);
+  line-height: 1.65;
+  max-width: 360px;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+.hero-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 5px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.80);
+  font-weight: 400;
+}
+
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; height: auto; }
+  .hero-right { height: 220px; }
+  .hero-zigzag { display: none; }
+  .hero-title { font-size: 34px; }
+  .hero-left { padding: 36px 24px; }
+}
+
+/* ══════════════════════
+   PROG BAR
+══════════════════════ */
+.prog-bar {
+  background: var(--ut-teal);
+  padding: 13px 52px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.prog-bar a {
+  font-size: 13px; color: #fff; text-decoration: none;
+  font-weight: 500; display: flex; align-items: center; gap: 6px;
+}
+.prog-bar a:hover { text-decoration: underline; }
+.prog-bar-sep { color: rgba(255,255,255,0.35); font-size: 13px; }
+.prog-bar-right { margin-left: auto; font-size: 12px; color: rgba(255,255,255,0.72); }
+
+/* ══════════════════════
+   CONTAINER / SECTIONS
+══════════════════════ */
+.container { max-width: 1060px; margin: 0 auto; padding: 0 40px 80px; }
+.section { margin-top: 58px; }
+.section-header {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 26px; border-bottom: 2px solid var(--bg-3); padding-bottom: 13px;
+}
+.section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 21px; color: var(--ut-blue); }
+.section-count { font-size: 13px; color: var(--ink-3); }
+
+/* Vision */
+.vision-wrap {
+  background: var(--ut-blue); border-radius: var(--card-r);
+  padding: 38px 46px; position: relative; overflow: hidden;
+}
+.vision-wrap::before {
+  content: '"'; position: absolute; top: -20px; left: 30px;
+  font-family: 'Syne', sans-serif; font-size: 180px;
+  color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none;
+}
+.vision-text {
+  font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 600;
+  color: #fff; line-height: 1.62; max-width: 680px; position: relative; z-index: 1;
+}
+.vision-text em { font-style: normal; color: var(--ut-teal); }
+.vision-footer { margin-top: 18px; font-size: 12px; color: rgba(255,255,255,0.4); position: relative; z-index: 1; }
+
+/* Intl strip */
+.intl-strip {
+  background: var(--white); border: 1px solid var(--bg-3);
+  border-radius: var(--card-r); padding: 26px 34px;
+  display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;
+}
+.intl-icon { font-size: 34px; flex-shrink: 0; }
+.intl-content h3 {
+  font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700;
+  color: var(--ut-blue); margin-bottom: 7px;
+}
+.intl-content p { font-size: 13.5px; color: var(--ink-2); line-height: 1.72; }
+
+/* ══════════════════════
+   STUDENT CARDS
+══════════════════════ */
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 20px;
+  padding-top: 56px; /* room for avatar overflow on first row */
+}
+
+.student-card {
+  background: var(--white);
+  border: 1px solid var(--bg-3);
+  border-radius: var(--card-r);
+  position: relative;
+  overflow: visible;
+  transition: transform 0.18s, box-shadow 0.18s;
+  margin-top: 48px; /* every card pushed down so avatar has space above */
+}
+.student-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,51,102,0.12);
+}
+
+/* Blue top banner behind avatar */
+.card-banner {
+  height: 52px;
+  background: linear-gradient(135deg, #003366 0%, #005080 100%);
+  border-radius: var(--card-r) var(--card-r) 0 0;
+}
+
+/* Avatar: sits above card, centered, touching the body */
+.avatar-wrap {
+  position: absolute;
+  top: -44px;       /* half above the card top */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.avatar-circle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3.5px solid #fff;
+  box-shadow: 0 3px 14px rgba(0,51,102,0.22);
+  background: var(--ut-teal-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.no-photo { font-size: 38px; opacity: 0.3; }
+
+/* Flag sticker — bottom-right of circle, clearly visible */
+.flag-sticker {
+  position: absolute;
+  bottom: -4px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  overflow: hidden;
+}
+
+/* Card text body — sits right below avatar */
+.student-body {
+  padding: 52px 16px 18px; /* top padding so text starts below avatar space */
+  text-align: center;
+}
+.student-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.student-origin {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.student-vision {
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  font-style: italic;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.no-vision { color: var(--ink-3); font-style: normal; text-align: center; }
+
+.student-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.link-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 500; padding: 5px 11px;
+  border-radius: 6px; text-decoration: none; transition: opacity 0.15s;
+}
+.link-chip:hover { opacity: 0.75; }
+.link-li { background: #e8f0f8; color: var(--ut-blue); }
+.link-none { background: var(--bg-2); color: var(--ink-3); font-style: italic; cursor: default; }
+
+/* ══════════════════════
+   FOOTER
+══════════════════════ */
+.page-footer {
+  margin-top: 60px; border-top: 1px solid var(--bg-3);
+  padding-top: 28px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+}
+.footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; color: var(--ut-blue); }
+.footer-sep { color: var(--bg-3); }
+.footer-text { font-size: 12px; color: var(--ink-3); }
+.footer-text a { color: var(--ut-teal); text-decoration: none; }
+.footer-text a:hover { text-decoration: underline; }
+
+/* ══════════════════════
+   RESPONSIVE
+══════════════════════ */
+@media (max-width: 680px) {
+  .hero { flex-direction: column; height: auto; }
+  .hero-left { width: 100%; padding: 36px 24px 28px; }
+  .hero-left::after { display: none; }
+  .hero-title { font-size: 30px; }
+  .prog-bar { padding: 13px 20px; }
+  .container { padding: 0 18px 60px; }
+  .students-grid { grid-template-columns: 1fr 1fr; }
+
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+
+  <!-- Left: navy text panel -->
+  <div class="hero-left">
+    <p class="hero-kicker">University of Twente · ITC Faculty</p>
+    <h1 class="hero-title">Spatial<br>Systems &amp;<br><em>Society</em></h1>
+    <p class="hero-sub">Tackling disasters, climate adaptation and urban complexity through spatial data science.</p>
+    <div class="hero-badges">
+      <span class="badge">Class of 2027</span>
+      <span class="badge">🌍 International Module</span>
+      <span class="badge">Enschede, NL</span>
+    </div>
+  </div>
+
+  <!-- Right: class photo with blue gradient bleed -->
+  <div class="hero-right">
+    <img src="images/Full_class_photo.jpeg" alt="Spatial Systems &amp; Society Class of 2027 at Langezijds">
+  </div>
+
+  <!-- Zigzag divider — 4 layers for depth & glow -->
+  <div class="hero-zigzag">
+    <svg viewBox="0 0 52 460" preserveAspectRatio="none"
+         xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Layer 1: solid navy anchor fill -->
+        <linearGradient id="zSolid" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#02244a" stop-opacity="1"/>
+          <stop offset="50%"  stop-color="#02244a" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#02244a" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Layer 2: wide atmospheric glow -->
+        <linearGradient id="zGlow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#02244a" stop-opacity="0"/>
+          <stop offset="30%"  stop-color="#005f82" stop-opacity="0.7"/>
+          <stop offset="50%"  stop-color="#009BBD" stop-opacity="0.55"/>
+          <stop offset="68%"  stop-color="#009BBD" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#009BBD" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Layer 3: inner depth shadow -->
+        <linearGradient id="zShadow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#000a14" stop-opacity="0"/>
+          <stop offset="38%"  stop-color="#000a14" stop-opacity="0.6"/>
+          <stop offset="52%"  stop-color="#000a14" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#000a14" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Layer 4: bright teal highlight edge -->
+        <linearGradient id="zEdge" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#00e5ff" stop-opacity="0"/>
+          <stop offset="46%"  stop-color="#00e5ff" stop-opacity="1"/>
+          <stop offset="54%"  stop-color="#009BBD" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#009BBD" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="fBlur5"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="fBlur2"><feGaussianBlur stdDeviation="1.8"/></filter>
+        <filter id="fBlur1"><feGaussianBlur stdDeviation="0.7"/></filter>
+      </defs>
+
+      <!--
+        9 teeth over 460px → each tooth 460/9 ≈ 51px
+        Valley (left tip) x=26, Peak (right tip) x=52
+        Points: 26,0 → 52,25.5 → 26,51 → 52,76.5 → ...
+        Rounded to integers:
+        26,0  52,26  26,51  52,77  26,102  52,128  26,153  52,179  26,204
+        52,230 26,255 52,281 26,306 52,332 26,357 52,383 26,408 52,434 26,460
+      -->
+
+      <!-- LAYER 1 — Solid navy fill left of teeth -->
+      <polygon
+        points="0,0
+                26,0   52,26  26,51
+                52,77  26,102
+                52,128 26,153
+                52,179 26,204
+                52,230 26,255
+                52,281 26,306
+                52,332 26,357
+                52,383 26,408
+                52,434 26,460
+                0,460"
+        fill="url(#zSolid)"
+      />
+
+      <!-- LAYER 2 — Wide blurred atmospheric glow -->
+      <polyline
+        points="26,0   52,26  26,51
+                52,77  26,102
+                52,128 26,153
+                52,179 26,204
+                52,230 26,255
+                52,281 26,306
+                52,332 26,357
+                52,383 26,408
+                52,434 26,460"
+        fill="none"
+        stroke="url(#zGlow)"
+        stroke-width="36"
+        stroke-linejoin="miter"
+        filter="url(#fBlur5)"
+        opacity="0.95"
+      />
+
+      <!-- LAYER 3 — Inner depth shadow -->
+      <polyline
+        points="26,0   52,26  26,51
+                52,77  26,102
+                52,128 26,153
+                52,179 26,204
+                52,230 26,255
+                52,281 26,306
+                52,332 26,357
+                52,383 26,408
+                52,434 26,460"
+        fill="none"
+        stroke="url(#zShadow)"
+        stroke-width="6"
+        stroke-linejoin="miter"
+        filter="url(#fBlur2)"
+        opacity="0.9"
+      />
+
+      <!-- LAYER 4 — Bright teal highlight line -->
+      <polyline
+        points="26,0   52,26  26,51
+                52,77  26,102
+                52,128 26,153
+                52,179 26,204
+                52,230 26,255
+                52,281 26,306
+                52,332 26,357
+                52,383 26,408
+                52,434 26,460"
+        fill="none"
+        stroke="url(#zEdge)"
+        stroke-width="1.8"
+        stroke-linejoin="miter"
+        filter="url(#fBlur1)"
+        opacity="1"
+      />
+
+    </svg>
+  </div>
+
+</div>
+
+
+<div class="prog-bar">
+  <a href="https://www.utwente.nl/en/education/master/programmes/spatial-systems-society/" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="white" stroke-width="1.5"/><path d="M8 2C8 2 6 5 6 8C6 11 8 14 8 14M8 2C8 2 10 5 10 8C10 11 8 14 8 14M2.5 6H13.5M2.5 10H13.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Programme website
+  </a>
+  <span class="prog-bar-sep">·</span>
+  <a href="https://www.utwente.nl" target="_blank">University of Twente</a>
+  <span class="prog-bar-sep">·</span>
+  <a href="https://itc.nl" target="_blank">ITC Faculty</a>
+  <div class="prog-bar-right">📍 Drienerlolaan 5, 7522 NB, Enschede</div>
+</div>
+
+<div class="container">
+
+  <!-- VISION -->
+  <div class="section">
+    <div class="section-header"><h2 class="section-title">Our Shared Vision</h2></div>
+    <div class="vision-wrap">
+      <p class="vision-text">We believe that <em>space is never neutral</em>. As spatial engineers and society-minded scientists, we use maps, data and systems thinking to make the world more equitable, resilient and sustainable — one complex problem at a time.</p>
+      <p class="vision-footer">Spatial Systems &amp; Society · Class of 2027 · University of Twente</p>
+    </div>
+  </div>
+
+  <!-- INTL MODULE -->
+  <div class="section">
+    <div class="intl-strip">
+      <div class="intl-icon">✈️</div>
+      <div class="intl-content">
+        <h3>International Module 2026</h3>
+        <p>Our class is heading abroad as part of the programme's international module — applying spatial analysis and socio-environmental methods in a real-world, cross-cultural context. This page is our collective introduction: who we are, what drives us, and how to connect.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENTS -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Meet the Class</h2>
+      <span class="section-count">13 students</span>
+    </div>
+    <div class="students-grid">
+
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Anika.png" alt="Anika"></div>
+          <span class="flag-sticker">🇧🇩</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Anika</p>
+          <p class="student-origin">Bangladesh</p>
+          <p class="student-vision">"Interested in applying data-driven approaches to hazard mitigation, and sustainable city development."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/anika-tahsin-rifat-216b30146" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Bart.jpeg" alt="Bart"></div>
+          <span class="flag-sticker">🇳🇱</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Bart</p>
+          <p class="student-origin">Netherlands</p>
+          <p class="student-vision">&ldquo;Focused on applying remote sensing data to better understand environmental change and support sustainable spatial development.&rdquo;</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/bart-witteman-78556029b/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Ethan.jpeg" alt="Ethan"></div>
+          <span class="flag-sticker">🇳🇱</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Ethan</p>
+          <p class="student-origin">Netherlands</p>
+          <p class="student-vision">"Sustainable development — climate change, biodiversity, nature-based, focusing on inter- and transdisciplinarity."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/ethan-h%C3%B6fgen/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Ishraque.png" alt="Ishraque"></div>
+          <span class="flag-sticker">🇧🇩</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Ishraque</p>
+          <p class="student-origin">Bangladesh</p>
+          <p class="student-vision">"Linking digital twins with stakeholder insight for climate-resilient and smarter city planning."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/ishraquebk/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Jonathan.jpeg" alt="Jonathan"></div>
+          <span class="flag-sticker">🇲🇹</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Jonathan</p>
+          <p class="student-origin">Malta</p>
+          <p class="student-vision">"Applying GIS and remote sensing to support data-driven urban, transport, and climate-resilient planning."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/jonathan-polidano-69531a3b8/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/June.jpeg" alt="June"></div>
+          <span class="flag-sticker">🇰🇪</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">June</p>
+          <p class="student-origin">Kenya</p>
+          <p class="student-vision">&ldquo;Focused on delivering tangible, community-driven solutions that enhance functionality and spatial equity.&rdquo;</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/june-okong-o-4a2a37225/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Kilian.jpeg" alt="Kilian"></div>
+          <span class="flag-sticker">🇦🇹</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Kilian</p>
+          <p class="student-origin">Austria</p>
+          <p class="student-vision no-vision">Vision coming soon.</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/kilian-odonell" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Luuk-Jan.jpeg" alt="Luuk-Jan"></div>
+          <span class="flag-sticker">🇳🇱</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Luuk-Jan</p>
+          <p class="student-origin">Netherlands</p>
+          <p class="student-vision">"Integrating technical expertise for societal and spatial problem solving."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/luukjanzegers/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><span class="no-photo">👤</span></div>
+          <span class="flag-sticker">🇵🇰</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Mashal</p>
+          <p class="student-origin">Pakistan</p>
+          <p class="student-vision">"Nature-Based Solutions, their socio-economic impact on climate adaptation."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/mashal-riaz-c37689877/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Philip.jpeg" alt="Philip"></div>
+          <span class="flag-sticker">🇩🇪</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Philip</p>
+          <p class="student-origin">Germany</p>
+          <p class="student-vision">"Broad interest in geography and geoscience, passionate about presenting complex things in a creative, understandable way."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/philip-kramwinkel-945846259/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Pleun.jpeg" alt="Pleun"></div>
+          <span class="flag-sticker">🇳🇱</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Pleun</p>
+          <p class="student-origin">Netherlands</p>
+          <p class="student-vision">&ldquo;Motivated to create a brighter future through sustainable water management.&rdquo;</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/pleun-kuipers-61708a29b/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Quinten.jpeg" alt="Quinten"></div>
+          <span class="flag-sticker">🇳🇱</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Quinten</p>
+          <p class="student-origin">Netherlands</p>
+          <p class="student-vision">"GIS specialist with broad interests, turning data into actionable insights."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/qrom/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="student-card">
+        <div class="card-banner"></div>
+        <div class="avatar-wrap">
+          <div class="avatar-circle"><img src="images/Sarim.jpeg" alt="Sarim"></div>
+          <span class="flag-sticker">🇵🇰</span>
+        </div>
+        <div class="student-body">
+          <p class="student-name">Sarim</p>
+          <p class="student-origin">Pakistan</p>
+          <p class="student-vision">"To help build a safer, more resilient world."</p>
+          <div class="student-links"><a href="https://www.linkedin.com/in/sarim-azeem-a67898201/" target="_blank" class="link-chip link-li"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#003366" stroke-width="1.5"/><path d="M4 6.5V11.5M4 4.5V4.6M7 11.5V9C7 7.9 7.9 7 9 7C10.1 7 11 7.9 11 9V11.5M7 6.5V11.5" stroke="#003366" stroke-width="1.5" stroke-linecap="round"/></svg> LinkedIn</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <span class="footer-logo">UNIVERSITY OF TWENTE</span>
+    <span class="footer-sep">|</span>
+    <span class="footer-text">
+      Spatial Systems &amp; Society · MSc · Class of 2027 ·
+      <a href="https://www.utwente.nl/en/itc/education/student-life/orbit-association-of-ITC-students/" target="_blank">Association of ITC Students</a> ·
+      ITC Faculty · Enschede, the Netherlands
+    </span>
+  </div>
+
+</div>
+</body>
+</html>
